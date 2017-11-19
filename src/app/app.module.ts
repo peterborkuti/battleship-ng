@@ -3,11 +3,17 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { PlacementComponent } from './placement/placement.component';
+import { BattleComponent } from './battle/battle.component';
+import { ExitComponent } from './exit/exit.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PlacementComponent,
+    BattleComponent,
+    ExitComponent
   ],
   imports: [
     BrowserModule
