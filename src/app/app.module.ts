@@ -11,6 +11,8 @@ import { EmptymapComponent } from './emptymap/emptymap.component';
 import { ShiplistComponent } from './shiplist/shiplist.component';
 import { EnemymapComponent } from './enemymap/enemymap.component';
 import { MymapComponent } from './mymap/mymap.component';
+import { MapComponent } from './map/map.component';
+import { CellComponent } from './cell/cell.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { MymapComponent } from './mymap/mymap.component';
     EmptymapComponent,
     ShiplistComponent,
     EnemymapComponent,
-    MymapComponent
+    MymapComponent,
+    MapComponent,
+    CellComponent
   ],
   imports: [
     BrowserModule,
