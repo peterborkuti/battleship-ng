@@ -1,3 +1,13 @@
 <p>
   map works!
 </p>
+
+<table>
+
+<tr *ngFor="let cellRow of cells">
+  <td *ngFor="let cell of cellRow">
+    <app-cell></app-cell>
+  </td>
+</tr>
+
+</table>

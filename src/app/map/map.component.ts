@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CellComponent } from '../cell/cell.component';
+
 
 @Component({
   selector: 'app-map',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+  cells = [];
 
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit() {
+    this.cells = [];
+    for (let r = 0; r < 10; r++) {
+      this.cells.push([]);
+       for (let c = 0; c < 10; c++) {
+         this.cells[r].push(new CellComponent());
+       }
+    }
   }
 
 }
