@@ -1,9 +1,19 @@
-<p>
-  battle works!
-</p>
-<app-enemymap></app-enemymap>
-<app-mymap></app-mymap>
-<nav>
-  <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/placement']">New Game</button>
-  <button routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/exit']">Exit</button>
-</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-5">
+      <app-enemymap></app-enemymap>
+    </div>
+    <div class="col-5 offset-2">
+      <app-mymap></app-mymap>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <button class="btn btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/placement']">New Game</button>
+    </div>
+    <div class="col-2 offset-1">
+      <button class="btn btn-secondary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/exit']">Exit</button>
+    </div>
+  </div>
+</div>
