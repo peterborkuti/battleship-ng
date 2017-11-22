@@ -1,27 +1,9 @@
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-
-    <div class="carousel-item" *ngFor="let ship of ships">
-
-      <div class="card" style="width: 20rem;">
-        <img class="card-img-top" [src]="ship.imagePath" [alt]="ship.imageFileDescription">
-        <div class="card-block">
-          <h4 class="card-title">{{ship.name}}</h4>
-          <p class="card-text">{{ship.description}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+<ngb-carousel>
+    <ng-template ngbSlide *ngFor="let ship of ships; let i = index">
+      <img src="{{ship.imagePath}}" alt="{{ship.imageFileDescription}}">
+      <div class="carousel-caption">
+        <h3>{{ship.name}}</h3>
+        <p>{{ship.description}}</p>
       </div>
-
-    </div>
-
-
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
+    </ng-template>
+</ngb-carousel>
