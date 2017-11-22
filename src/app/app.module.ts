@@ -14,6 +14,7 @@ import { EnemymapComponent } from './enemymap/enemymap.component';
 import { MymapComponent } from './mymap/mymap.component';
 import { MapComponent } from './map/map.component';
 import { CellComponent } from './cell/cell.component';
+import { ShipsComponent } from './ships/ships.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CellComponent } from './cell/cell.component';
     EnemymapComponent,
     MymapComponent,
     MapComponent,
-    CellComponent
+    CellComponent,
+    ShipsComponent
   ],
   imports: [
     BrowserModule,
