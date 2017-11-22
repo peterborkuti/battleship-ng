@@ -9,6 +9,7 @@ import { ShipService } from '../ships/ship.service';
 })
 export class ShiplistComponent implements OnInit {
   ships: Ship[];
+  active: number;
 
   constructor(private shipService: ShipService) { }
 
@@ -21,7 +22,7 @@ export class ShiplistComponent implements OnInit {
             e['imagePath'] = 'assets/' + e.imageFileName; return e;
           }
         );
-        console.log(this.ships);
+      this.active = this.ships[0].id;
       }
     );
   }
