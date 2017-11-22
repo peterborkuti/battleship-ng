@@ -13,9 +13,16 @@ export class ShiplistComponent implements OnInit {
   constructor(private shipService: ShipService) { }
 
   ngOnInit() {
-    this.shipService.getShips().subscribe(data => this.ships = data);
-    this.ships = this.ships.map(function(e){e['imagePath'] = 'assets/' + e.imageFileName; return e; });
-    console.log(this.ships);
+    this.shipService.getShips().subscribe(
+      data => {
+      this.ships = data;
+      this.ships = this.ships.map(
+          function(e){
+            e['imagePath'] = 'assets/' + e.imageFileName; return e;
+          }
+        );
+        console.log(this.ships);
+      }
+    );
   }
-
 }
