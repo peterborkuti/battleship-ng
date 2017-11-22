@@ -16,6 +16,9 @@ import { MapComponent } from './map/map.component';
 import { CellComponent } from './cell/cell.component';
 import { ShipsComponent } from './ships/ships.component';
 
+import { HttpModule } from '@angular/http';
+import { ShipService } from './ships/ship.service';
+
 
 @NgModule({
   declarations: [
@@ -34,9 +37,10 @@ import { ShipsComponent } from './ships/ships.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    HttpModule
   ],
-  providers: [],
+  providers: [ ShipService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
