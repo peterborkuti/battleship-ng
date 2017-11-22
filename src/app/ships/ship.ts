@@ -6,4 +6,5 @@ export class Ship {
   description: string;
   shipLength: number;
   alowedNumberOfShips: number;
+  imagePath: string;
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Ship } from '../ships/ship';
+import { ShipService } from '../ships/ship.service';
 
 @Component({
   selector: 'app-shiplist',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shiplist.component.css']
 })
 export class ShiplistComponent implements OnInit {
+  ships: Ship[];
 
-  constructor() { }
+  constructor(private shipService: ShipService) { }
 
   ngOnInit() {
+    this.shipService.getShips().subscribe(data => this.ships = data);
+    this.ships = this.ships.map(function(e){e['imagePath'] = 'assets/' + e.imageFileName; return e; });
   }
 
 }

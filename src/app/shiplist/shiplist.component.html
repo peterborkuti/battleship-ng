@@ -1,3 +1,9 @@
-<p>
-  shiplist works!
-</p>
+
+<div class="card" style="width: 20rem;" *ngFor="let ship of ships">
+  <img class="card-img-top" [src]="ship.imagePath" [alt]="ship.imageFileDescription">
+  <div class="card-block">
+    <h4 class="card-title">{{ship.name}}</h4>
+    <p class="card-text">{{ship.description}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>

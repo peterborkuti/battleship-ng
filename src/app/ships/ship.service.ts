@@ -5,11 +5,11 @@ import { Ship } from './ship';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class RaceService {
+export class ShipService {
 
   constructor(private http: Http) { }
 
-  getRaces() {
+  getShips() {
     return this.http.get('assets/ships.json')
           .map(response => <Ship[]>response.json().shipsData);
   }
