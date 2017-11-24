@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Ship } from '../ships/ship';
 
 @Component({
   selector: 'app-placement',
@@ -10,6 +11,10 @@ export class PlacementComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  newShipSelected(ship: Ship) {
+    console.log(ship);
   }
 
 }

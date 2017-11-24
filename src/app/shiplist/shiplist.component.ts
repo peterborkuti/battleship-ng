@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Ship } from '../ships/ship';
 import { ShipService } from '../ships/ship.service';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbSlide } from '@ng-bootstrap/ng-bootstrap/';
 
 @Component({
   selector: 'app-shiplist',
@@ -11,13 +12,12 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ShiplistComponent implements OnInit {
   ships: Ship[];
-  active: number;
+  @Output() onActiveChanged = new EventEmitter<Ship>();
 
   constructor(private shipService: ShipService, config: NgbCarouselConfig) {
     config.interval = 0;
     config.wrap = true;
     config.keyboard = false;
-
    }
 
   ngOnInit() {
@@ -29,24 +29,15 @@ export class ShiplistComponent implements OnInit {
             e['imagePath'] = 'assets/' + e.imageFileName; return e;
           }
         );
-      this.active = 0;
+
+      this.onActiveChanged.emit(this.ships[0]);
       }
     );
   }
 
-  next() {
-    if (this.active < this.ships.length - 1) {
-      this.active++;
-    } else {
-      this.active = 0;
-    }
+  slideEventHandler(event) {
+    console.log(event.current);
+    this.onActiveChanged.emit(this.ships[event.current]);
   }
 
-  prev() {
-    if (this.active > 0) {
-      this.active--;
-    } else {
-      this.active = this.ships.length - 1;
-    }
-  }
 }

@@ -1,3 +1,8 @@
-<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+<button type="button" class="btn btn-primary" data-toggle="button"
+  aria-pressed="false" autocomplete="off"
+  (mouseenter)="mouseEnteredIntoCell($event)"
+  (mouseleave)="mouseLeavedCell($event)"
+  (click)="cellIsClicked($event)"
+  (dblclick)="cellIsDblClicked($event)">
   {{status}}
 </button>
