@@ -18,13 +18,15 @@ export class MapComponent implements OnInit {
     for (let r = 0; r < 10; r++) {
       this.cells.push([]);
        for (let c = 0; c < 10; c++) {
-         this.cells[r].push(new CellComponent(r, c));
+         this.cells[r].push(new CellComponent());
        }
     }
   }
 
-  cellClicked(coord) {
-    console.log('cell clikced:', coord);
+  cellClicked(cell) {
+    console.log('cell clicked:', cell);
+    cell.setButtonClass('btn-secondary');
+    console.log('cell class set');
   }
 
   mouseEnteredIntoCell(coord) {

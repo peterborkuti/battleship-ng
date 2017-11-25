@@ -9,39 +9,46 @@ import { Coord } from './coord';
 
 export class CellComponent implements OnInit {
   status: number;
+  buttonClass: string;
 
   @Input() row: number;
   @Input() col: number;
 
-  @Output() onMouseEnter = new EventEmitter<Coord>();
-  @Output() onMouseLeave = new EventEmitter<Coord>();
-  @Output() onClick = new EventEmitter<Coord>();
-  @Output() onDblClick = new EventEmitter<Coord>();
+  @Output() onMouseEnter = new EventEmitter<CellComponent>();
+  @Output() onMouseLeave = new EventEmitter<CellComponent>();
+  @Output() onClick = new EventEmitter<CellComponent>();
+  @Output() onDblClick = new EventEmitter<CellComponent>();
 
   constructor() { }
 
   ngOnInit() {
     this.status = 0;
+    this.buttonClass = 'btn-primary';
+  }
+
+  setButtonClass(btnClass) {
+    this.buttonClass = btnClass;
+    console.log('Buttonclass is set to:', btnClass);
   }
 
   mouseEnteredIntoCell(event) {
-    console.log('enter', event);
-    return this.onMouseEnter.emit(new Coord(this.row, this.col));
+    console.log('enter', this);
+    this.onMouseEnter.emit(this);
   }
 
   mouseLeavedCell() {
     console.log('leave', event);
-    return this.onMouseLeave.emit(new Coord(this.row, this.col));
+    this.onMouseLeave.emit(this);
   }
 
   cellIsClicked() {
     console.log('click', event);
-    return this.onClick.emit(new Coord(this.row, this.col));
+    this.onClick.emit(this);
   }
 
   cellIsDblClicked() {
     console.log('dblclick', event);
-    return this.onDblClick.emit(new Coord(this.row, this.col));
+    this.onDblClick.emit(this);
   }
 
 }
