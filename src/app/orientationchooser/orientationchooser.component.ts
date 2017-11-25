@@ -3,7 +3,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 const PATH_PREFIX = 'assets/Ship-icon-';
 const PATH_POSTFIX = '.png';
-const STATE_STRINGS = ['vertical', 'horizontal'];
+const ORIENTATIONS = ['vertical', 'horizontal'];
 
 @Component({
   selector: 'app-orientationchooser',
@@ -14,6 +14,7 @@ const STATE_STRINGS = ['vertical', 'horizontal'];
 export class OrientationchooserComponent implements OnInit {
   imagePath: string;
   state: number;
+  orientation: string;
 
   @Output() onOrientationChange = new EventEmitter<string>();
 
@@ -26,9 +27,9 @@ export class OrientationchooserComponent implements OnInit {
 
   changeState() {
     this.state = 1 - this.state;
-    this.imagePath = PATH_PREFIX + STATE_STRINGS[this.state] + PATH_POSTFIX;
-    this.onOrientationChange.emit(STATE_STRINGS[this.state]);
-    console.log(this.imagePath);
+    this.orientation = ORIENTATIONS[this.state];
+    this.imagePath = PATH_PREFIX + this.orientation + PATH_POSTFIX;
+    this.onOrientationChange.emit(this.orientation);
   }
 
 }

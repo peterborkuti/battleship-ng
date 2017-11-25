@@ -2,9 +2,13 @@
 
 <table class="table table-bordered">
 
-<tr *ngFor="let cellRow of cells">
-  <td *ngFor="let cell of cellRow">
-    <app-cell></app-cell>
+<tr *ngFor="let cellRow of cells; let r = index">
+  <td *ngFor="let cell of cellRow; let c = index">
+    <app-cell row="{{r}}" col="{{c}}"
+      (onClick)="cellClicked($event)"
+      (onMouseEnter)="mouseEnteredIntoCell($event)"
+      (onMouseLeave)="mouseLeavedCell($event)">
+    </app-cell>
   </td>
 </tr>
 

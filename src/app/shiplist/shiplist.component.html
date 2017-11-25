@@ -1,6 +1,6 @@
 <ngb-carousel (slide)="slideEventHandler($event)" activeId="0">
     <ng-template ngbSlide *ngFor="let ship of ships; let i = index" [id]="i" >
-      <img src="{{ship.imagePath}}" class="d-block img-fluid" alt="{{ship.imageFileDescription}}">
+      <img src="{{ship.imagePath}}" class="d-block img-fluid" title="{{ship.imageFileDescription}}" alt="{ship.name}">
       <div class="carousel-caption">
         <h3>{{ship.name}}</h3>
         <p>{{ship.description}}</p>

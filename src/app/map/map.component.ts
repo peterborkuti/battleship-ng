@@ -18,9 +18,21 @@ export class MapComponent implements OnInit {
     for (let r = 0; r < 10; r++) {
       this.cells.push([]);
        for (let c = 0; c < 10; c++) {
-         this.cells[r].push(new CellComponent());
+         this.cells[r].push(new CellComponent(r, c));
        }
     }
+  }
+
+  cellClicked(coord) {
+    console.log('cell clikced:', coord);
+  }
+
+  mouseEnteredIntoCell(coord) {
+
+  }
+
+  mouseLeavedCell(coord) {
+
   }
 
 }
