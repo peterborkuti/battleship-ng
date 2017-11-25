@@ -14,7 +14,11 @@ export class PlacementComponent implements OnInit {
   }
 
   newShipSelected(ship: Ship) {
-    console.log(ship);
+    console.log('ship selected:', ship.name);
+  }
+
+  shipOrientationChanged(orientation) {
+    console.log('ship orientation changed:', orientation);
   }
 
 }

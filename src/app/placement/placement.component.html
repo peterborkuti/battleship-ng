@@ -5,7 +5,10 @@
     <div class="col-5">
       <app-emptymap></app-emptymap>
     </div>
-    <div class="col-5 offset-2">
+    <div class="col-2">
+      <app-orientationchooser (onOrientationChange)="shipOrientationChanged($event)"></app-orientationchooser>
+    </div>
+    <div class="col-5">
       <app-shiplist (onActiveChanged)="newShipSelected($event)"></app-shiplist>
     </div>
   </div>
