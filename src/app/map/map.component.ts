@@ -72,9 +72,24 @@ export class MapComponent implements OnInit {
     });
   }
 
-  cellClicked(cell) {
+  cellClicked(cell: Cell) {
+    if (cell.isSet()) {
+      const coords = cell.getShipCoords();
+      console.log(coords);
+      coords.forEach(c => {
+        this.cells[c.row][c.col].resetCell();
+      });
+
+      return;
+    }
+
+    const cells = this.shipCoords(cell.row, cell.col);
+    if (this.occupiedAny(cells)) {
+      return;
+    }
+
     this.shipCoords(cell.row, cell.col).forEach(e => {
-      this.cells[e.row][e.col].setCell();
+        this.cells[e.row][e.col].setCell(cells);
     });
   }
 

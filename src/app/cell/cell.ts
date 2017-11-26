@@ -3,6 +3,8 @@ export class Cell {
   public style: string;
   private highlightBackup: string;
   private set: boolean;
+  private shipCoords = [];
+
   constructor (public readonly row: number, public readonly col: number,
      public readonly unsetStyle: string,
      public readonly highLightStyle: string,
@@ -16,10 +18,15 @@ export class Cell {
     return this.set;
   }
 
-  setCell() {
-    this.set = !this.set;
+  getShipCoords() {
+    return this.shipCoords;
+  }
 
-    if (this.set) {
+  setCell(shipCoords) {
+
+    if (!this.set) {
+      this.set = true;
+      this.shipCoords = shipCoords;
       this.highlightBackup = this.setStyle;
       this.style = this.setStyle;
     } else {
@@ -30,6 +37,8 @@ export class Cell {
   resetCell() {
     this.highlightBackup = this.unsetStyle;
     this.style = this.unsetStyle;
+    this.shipCoords = [];
+    this.set = false;
   }
 
   highLight() {
