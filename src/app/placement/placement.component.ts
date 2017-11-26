@@ -7,6 +7,8 @@ import { Ship } from '../ships/ship';
   styleUrls: ['./placement.component.css']
 })
 export class PlacementComponent implements OnInit {
+  shipLength: number;
+  shipOrientation: string;
 
   constructor() { }
 
@@ -14,11 +16,13 @@ export class PlacementComponent implements OnInit {
   }
 
   newShipSelected(ship: Ship) {
-    console.log('ship selected:', ship.name);
+    this.shipLength = ship.shipLength;
+    console.log('placement:ship selected:', ship.name);
   }
 
   shipOrientationChanged(orientation) {
-    console.log('ship orientation changed:', orientation);
+    this.shipOrientation = orientation;
+    console.log('placement: ship orientation changed:', orientation);
   }
 
 }

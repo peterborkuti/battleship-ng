@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="col-5">
-      <app-emptymap></app-emptymap>
+      <app-emptymap [shipOrientation]="shipOrientation" [shipLength]="shipLength"></app-emptymap>
     </div>
     <div class="col-2">
       <app-orientationchooser (onOrientationChange)="shipOrientationChanged($event)"></app-orientationchooser>

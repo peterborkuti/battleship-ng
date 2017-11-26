@@ -4,11 +4,11 @@
 
 <tr *ngFor="let cellRow of cells; let r = index">
   <td *ngFor="let cell of cellRow; let c = index">
-    <app-cell row="{{r}}" col="{{c}}"
-      (onClick)="cellClicked($event)"
-      (onMouseEnter)="mouseEnteredIntoCell($event)"
-      (onMouseLeave)="mouseLeavedCell($event)">
-    </app-cell>
+    <app-cell [cell]="cell"
+    (onClick)="cellClicked($event)"
+    (onMouseEnter)="mouseEnteredIntoCell($event)"
+    (onMouseLeave)="mouseLeavedCell($event)"
+    ></app-cell>
   </td>
 </tr>
 

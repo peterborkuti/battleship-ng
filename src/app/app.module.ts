@@ -42,6 +42,7 @@ import { OrientationchooserComponent } from './orientationchooser/orientationcho
     NgbModule.forRoot(),
     HttpModule
   ],
+  entryComponents: [ CellComponent ],
   providers: [ ShipService ],
   bootstrap: [AppComponent]
 })

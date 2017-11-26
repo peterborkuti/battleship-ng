@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Coord } from './coord';
+import { Cell } from './cell';
 
 @Component({
   selector: 'app-cell',
@@ -8,47 +8,37 @@ import { Coord } from './coord';
 })
 
 export class CellComponent implements OnInit {
-  status: number;
-  buttonClass: string;
 
-  @Input() row: number;
-  @Input() col: number;
+  @Input() cell: Cell;
 
-  @Output() onMouseEnter = new EventEmitter<CellComponent>();
-  @Output() onMouseLeave = new EventEmitter<CellComponent>();
-  @Output() onClick = new EventEmitter<CellComponent>();
-  @Output() onDblClick = new EventEmitter<CellComponent>();
+  @Output() onMouseEnter = new EventEmitter<Cell>();
+  @Output() onMouseLeave = new EventEmitter<Cell>();
+  @Output() onClick = new EventEmitter<Cell>();
+  @Output() onDblClick = new EventEmitter<Cell>();
 
   constructor() { }
 
   ngOnInit() {
-    this.status = 0;
-    this.buttonClass = 'btn-primary';
-  }
-
-  setButtonClass(btnClass) {
-    this.buttonClass = btnClass;
-    console.log('Buttonclass is set to:', btnClass);
   }
 
   mouseEnteredIntoCell(event) {
     console.log('enter', this);
-    this.onMouseEnter.emit(this);
+    this.onMouseEnter.emit(this.cell);
   }
 
   mouseLeavedCell() {
     console.log('leave', event);
-    this.onMouseLeave.emit(this);
+    this.onMouseLeave.emit(this.cell);
   }
 
   cellIsClicked() {
     console.log('click', event);
-    this.onClick.emit(this);
+    this.onClick.emit(this.cell);
   }
 
   cellIsDblClicked() {
     console.log('dblclick', event);
-    this.onDblClick.emit(this);
+    this.onDblClick.emit(this.cell);
   }
 
 }
