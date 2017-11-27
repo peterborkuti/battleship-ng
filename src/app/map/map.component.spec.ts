@@ -23,3 +23,25 @@ describe('MapComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+describe('shipCoords', () => {
+  let component: MapComponent;
+  let fixture: ComponentFixture<MapComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ MapComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MapComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should give ', () => {
+    expect(component).toBeTruthy();
+  });
+});
