@@ -73,7 +73,7 @@ export class MapComponent implements OnInit {
     const row0 = Math.max(0, ship.topLeft.row - 1);
     const col0 = Math.max(0, ship.topLeft.col - 1);
     const row1 = Math.min(9, ship.bottomRight.row + 1);
-    const col1 = Math.max(9, ship.bottomRight.col + 1);
+    const col1 = Math.min(9, ship.bottomRight.col + 1);
 
     return {
       topLeft: {row: row0, col: col0},
