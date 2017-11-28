@@ -1,31 +1,12 @@
 
-<div class="container">
-
-  <div class="row">
-    <div class="col-5">
+      <div class="container-fluid">
       <app-emptymap [shipOrientation]="shipOrientation" [shipLength]="shipLength"></app-emptymap>
-    </div>
-    <div class="col-2">
+
       <app-orientationchooser (onOrientationChange)="shipOrientationChanged($event)"></app-orientationchooser>
-    </div>
-    <div class="col-5">
       <app-shiplist (onActiveChanged)="newShipSelected($event)"></app-shiplist>
-    </div>
-  </div>
 
 
-  <div class="row">
-
-    <div class="col-2">
       <button class="btn btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/battle']">Done</button>
-    </div>
-    <div class="col-2 offset-1">
       <button class="btn btn-secondary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/exit']">Exit</button>
-    </div>
-
-  </div>
-
-
 </div>
-
 

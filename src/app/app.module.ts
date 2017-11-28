@@ -19,6 +19,7 @@ import { ShipsComponent } from './ships/ships.component';
 import { HttpModule } from '@angular/http';
 import { ShipService } from './ships/ship.service';
 import { OrientationchooserComponent } from './orientationchooser/orientationchooser.component';
+import { AutoplacementComponent } from './autoplacement/autoplacement.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { OrientationchooserComponent } from './orientationchooser/orientationcho
     MapComponent,
     CellComponent,
     ShipsComponent,
-    OrientationchooserComponent
+    OrientationchooserComponent,
+    AutoplacementComponent
   ],
   imports: [
     BrowserModule,
