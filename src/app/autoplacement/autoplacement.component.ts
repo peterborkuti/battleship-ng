@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SimpleShip } from './simpleship';
 
 @Component({
   selector: 'app-autoplacement',
@@ -15,16 +16,27 @@ export class AutoplacementComponent implements OnInit {
   }
 
   reject(ship) {}
-  accept(ship) {}
-  first() {}
+  acceptable(...ships: SimpleShip[]) {}
+  first(ships: SimpleShip[]): SimpleShip {
+    return new SimpleShip(0, 0, 0, 0);
+  }
   next(ship) {}
-  backtrack(ship) {
-    if (this.reject(ship)) { return ; }
-    if (this.accept(ship)) { console.log(this.ships); }
-    let newShip = this.first();
+  isSolution(ships: SimpleShip[]) {}
+
+  backtrack(...ships: SimpleShip[]) {
+    if (this.isSolution(ships)) { return ships; }
+
+    let newShip: SimpleShip = this.first(ships);
     while (newShip !== null) {
-      backtrack()
+      if (this.acceptable(...ships, newShip)) {
+        let solution = this.backtrack(...ships, newShip);
+      }
+      let solution = this.backtrack(newShip);
+      if solution !== null
+      newShip = this.next(newShip);
     }
+
+    this.ships.pop();
   }
 
 }
