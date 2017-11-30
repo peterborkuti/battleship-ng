@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef, Input } from '@angular/
 import { CellComponent } from '../cell/cell.component';
 import { Cell } from '../cell/cell';
 import { Ship } from '../ships/ship';
-import { SimpleShip } from '../autoplacement/simpleship';
+import { SimpleShip, HORIZONTAL } from '../autoplacement/simpleship';
 import { AutoPlacement } from '../autoplacement/autoplacement';
 
 @Component({
@@ -12,7 +12,7 @@ import { AutoPlacement } from '../autoplacement/autoplacement';
 })
 
 export class MapComponent implements OnInit {
-  @Input() shipOrientation: string;
+  @Input() shipOrientation: number;
   @Input() shipLength: number;
 
   cells: Cell[][];
@@ -30,13 +30,13 @@ export class MapComponent implements OnInit {
   }
 
   private getShipRectangle(row: number, col: number,
-      orientation: string = this.shipOrientation,
+      orientation: number = this.shipOrientation,
       len: number = this.shipLength) {
 
     let deltaRow = 1;
     let deltaCol = 1;
 
-    if (orientation === 'horizontal') {
+    if (orientation === HORIZONTAL) {
       deltaCol = len;
     } else {
       deltaRow = len;
@@ -51,7 +51,7 @@ export class MapComponent implements OnInit {
   }
 
   shipCoords(row: number, col: number,
-      orientation: string = this.shipOrientation,
+      orientation: number = this.shipOrientation,
       len: number = this.shipLength) {
 
     const ship = this.getShipRectangle(row, col, orientation, len);
@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
   }
 
   neighbourhoodRectangle(row: number, col: number,
-      orientation: string = this.shipOrientation,
+      orientation: number = this.shipOrientation,
       len: number = this.shipLength) {
 
     const ship = this.getShipRectangle(row, col, orientation, len);
@@ -83,7 +83,7 @@ export class MapComponent implements OnInit {
   }
 
   neighbourhood(row: number, col: number,
-      orientation: string = this.shipOrientation,
+      orientation: number = this.shipOrientation,
       len: number = this.shipLength) {
 
     const rect = this.neighbourhoodRectangle(row, col, orientation, len);
@@ -139,7 +139,7 @@ export class MapComponent implements OnInit {
   }
 
   setCellsForShip(row: number, col: number,
-      orientation: string = this.shipOrientation,
+      orientation: number = this.shipOrientation,
       len: number = this.shipLength) {
 
         const cells = this.shipCoords(row, col, orientation, len);
@@ -168,9 +168,7 @@ export class MapComponent implements OnInit {
   placeShips(ships: SimpleShip[]) {
     const instance = this;
     ships.forEach(function(ship) {
-      const orientation = (ship.orientation) ? 'vertical' : 'horizontal';
-
-      instance.setCellsForShip(ship.row, ship.col, orientation, ship.len);
+      instance.setCellsForShip(ship.row, ship.col, ship.orientation, ship.len);
     });
   }
 

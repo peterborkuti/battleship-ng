@@ -1,8 +1,4 @@
-import { SimpleShip } from './simpleship';
-
-const HORIZONTAL = 0;
-const VERTICAL = 1;
-const NUMBER_OF_ORIENTATIONS = 2;
+import {HORIZONTAL, NUMBER_OF_ORIENTATIONS, VERTICAL, SimpleShip} from './simpleship';
 
 export class AutoPlacement {
   possibilities: number[];
@@ -15,7 +11,9 @@ export class AutoPlacement {
     this.possibilities = this.getNumbersFromZero(NUMBER_OF_ORIENTATIONS * this.mapSize * this.mapSize);
     this.shuffleArray(this.possibilities);
 
-    return this.backtrack();
+    const ships = this.backtrack();
+    console.log(ships);
+    return ships;
   }
 
   notOverlappedSameOrientation(ship1: SimpleShip, ship2: SimpleShip) {
@@ -59,8 +57,18 @@ export class AutoPlacement {
     return this.notOverlappedDifferentOrientation(ship1, ship2);
   }
 
+  outOfMap(ship: SimpleShip, mapSize: number) {
+    if (ship.orientation === HORIZONTAL) {
+      return ship.row + ship.len > mapSize;
+    } else {
+      return ship.col + ship.len > mapSize;
+    }
+  }
+
   acceptable(...ships: SimpleShip[]) {
     const lastShip: SimpleShip = ships.pop();
+
+    if (this.outOfMap(lastShip, this.mapSize)) { return false; }
 
     const notOverlappedWithLastShip = this.notOverlap.bind(this, lastShip);
 
@@ -97,7 +105,7 @@ export class AutoPlacement {
   // Durstenfeld, Fisher and Yates
   shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
 }
