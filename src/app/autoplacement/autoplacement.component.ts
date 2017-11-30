@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SimpleShip } from './simpleship';
 
 const shipLengths = [5, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2];
+const HORIZONTAL = 0;
+const VERTICAL = 1;
 
 @Component({
   selector: 'app-autoplacement',
@@ -10,23 +12,51 @@ const shipLengths = [5, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2];
 })
 export class AutoplacementComponent implements OnInit {
 
-  private ships;
-  constructor() { }
+    constructor() { }
 
   ngOnInit() {
-    this.ships = [];
+    console.log(this.backtrack());
   }
 
-  notOverlappedSameDirections(ship1: SimpleShip, ship2: SimpleShip) {
+  notOverlappedSameOrientation(ship1: SimpleShip, ship2: SimpleShip) {
+    let a = ship1;
+    let b = ship2;
 
+    if (a.orientation === HORIZONTAL) {
+      if (a.row !== b.row) {return true; }
+
+      if (a.col > b.col) { a = ship2; b = ship1; }
+
+      return a.col + a.len <= b.col;
+    } else {
+      if (a.col !== b.col) {return true; }
+
+      if (a.row > b.row) { a = ship2; b = ship1; }
+
+      return a.row + a.len <= b.row;
+    }
   }
+
+  notOverlappedDifferentOrientation(ship1: SimpleShip, ship2: SimpleShip) {
+    let a = ship1;
+    let b = ship2;
+
+    if (a.orientation !== HORIZONTAL) {
+      a = ship2; b = ship1;
+    }
+
+    if (b.col < a.col || b.col >= a.col + a.len) { return true; }
+
+    return (b.row > a.row) || (b.row + b.len <= a.row);
+  }
+
 
   notOverlap(ship1: SimpleShip, ship2: SimpleShip) {
     if (ship1.orientation === ship2.orientation) {
-      return notOverlappedSameDirections(ship1, ship2);
+      return this.notOverlappedSameOrientation(ship1, ship2);
     }
 
-    return notOverlappedDifferentDirections(ship1, ship2);
+    return this.notOverlappedDifferentOrientation(ship1, ship2);
   }
 
   acceptable(...ships: SimpleShip[]) {
@@ -53,8 +83,8 @@ export class AutoplacementComponent implements OnInit {
 
   possibilityIndexToCoordAndOrientation(index: number) {
     const orientation = index % 2;
-    index /= 2;
-    const row = index / 10;
+    index = Math.floor(index / 2);
+    const row = Math.floor(index / 10);
     const col = index - row * 10;
 
     return {row: row, col: col, orientation: orientation};
@@ -65,12 +95,13 @@ export class AutoplacementComponent implements OnInit {
 
     const newShip: SimpleShip = this.getNewShip(ships);
 
-    if (newShip === {}) {
+    if (newShip === null) {
       return [];
     }
 
     for (let index = 0; index < 2 * 10 * 10; index++) {
       const state = this.possibilityIndexToCoordAndOrientation(index);
+
       newShip.row = state.row;
       newShip.col = state.col;
       newShip.orientation = state.orientation;
