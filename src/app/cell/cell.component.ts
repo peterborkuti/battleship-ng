@@ -22,22 +22,18 @@ export class CellComponent implements OnInit {
   }
 
   mouseEnteredIntoCell(event) {
-    console.log('enter', this);
     this.onMouseEnter.emit(this.cell);
   }
 
   mouseLeavedCell() {
-    console.log('leave', event);
     this.onMouseLeave.emit(this.cell);
   }
 
   cellIsClicked() {
-    console.log('click', event);
     this.onClick.emit(this.cell);
   }
 
   cellIsDblClicked() {
-    console.log('dblclick', event);
     this.onDblClick.emit(this.cell);
   }
 

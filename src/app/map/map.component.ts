@@ -135,9 +135,18 @@ export class MapComponent implements OnInit {
       return;
     }
 
-    this.shipCoords(cell.row, cell.col).forEach(e => {
-        this.cells[e.row][e.col].setCell(cells);
-    });
+    this.setCellsForShip(cell.row, cell.col);
+  }
+
+  setCellsForShip(row: number, col: number,
+      orientation: string = this.shipOrientation,
+      len: number = this.shipLength) {
+
+        const cells = this.shipCoords(row, col, orientation, len);
+
+        cells.forEach(e => {
+          this.cells[e.row][e.col].setCell(cells);
+        });
   }
 
   occupiedAny(coords) {
@@ -160,10 +169,8 @@ export class MapComponent implements OnInit {
     const instance = this;
     ships.forEach(function(ship) {
       const orientation = (ship.orientation) ? 'vertical' : 'horizontal';
-      const coords = instance.shipCoords(ship.row, ship.col, orientation, ship.len);
-      coords.forEach(function(coord){
-        instance.cells[coord.row][coord.col].highLight();
-      });
+
+      instance.setCellsForShip(ship.row, ship.col, orientation, ship.len);
     });
   }
 
