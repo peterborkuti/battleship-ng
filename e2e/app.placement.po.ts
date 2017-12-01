@@ -6,7 +6,11 @@ export class AppPage {
     return browser.get(this.route);
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getPlacementGrid() {
+    return element(by.tagName('app-map'));
+  }
+
+  getAutoPlacementButton() {
+    return element(by.tagName('app-map')).$('button');
   }
 }
