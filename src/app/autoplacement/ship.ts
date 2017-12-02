@@ -2,7 +2,7 @@ import { Rectangle } from './rectangle';
 import { Coord } from './coord';
 
 export const HORIZONTAL = 0;
-export const VERTICAL = 0;
+export const VERTICAL = 1;
 export const NUMBER_OF_ORIENTATIONS = 2;
 
 export class Ship {
@@ -11,6 +11,10 @@ export class Ship {
     public row: number = 0,
     public col: number = 0,
     public orientation: number = HORIZONTAL) {}
+
+  toString() {
+    return 'Ship{' + [this.len, this.row, this.col, this.orientation].join(',') + '}';
+  }
 
   isInMap(rows: number = 10, cols: number = 10): boolean {
 
@@ -41,7 +45,7 @@ export class Ship {
     return coords;
   }
 
-  private getShipRectangle(): Rectangle {
+  public getShipRectangle(): Rectangle {
 
     let deltaRow = 1;
     let deltaCol = 1;
@@ -55,6 +59,6 @@ export class Ship {
     return new Rectangle(
       new Coord(this.row, this.col),
       new Coord(this.row + deltaRow - 1, this.col + deltaCol - 1));
-    }
+  }
 
 }

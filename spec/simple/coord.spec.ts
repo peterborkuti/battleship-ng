@@ -1,6 +1,4 @@
-import { TestBed } from '@angular/core/testing';
-
-import { Coord } from './coord';
+import { Coord } from '../../src/app/autoplacement/coord';
 
 describe('Coord', () => {
   it('should create', () => {
@@ -8,6 +6,6 @@ describe('Coord', () => {
   });
 
   it('should stringify', () => {
-    expect(new Coord(5, 8)).toBe('(0,0)');
+    expect(new Coord(5, 8).toString()).toEqual('(5,8)');
   });
 });
