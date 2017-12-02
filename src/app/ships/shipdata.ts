@@ -1,6 +1,6 @@
-import { Ship } from './ship';
+import { VisualShip } from './visualship';
 
-export const SHIPS: Ship[] = [
+export const SHIPS: VisualShip[] = [
   {
     id: 1,
     name: 'Carrier',

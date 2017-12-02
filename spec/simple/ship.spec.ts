@@ -1,4 +1,5 @@
 import { Ship, VERTICAL, HORIZONTAL } from '../../src/app/autoplacement/ship';
+import { Coord } from '../../src/app/autoplacement/coord';
 describe('foundation', () => {
   it('should create', () => {
     expect((new Ship(0)).toString()).toBe('Ship{0,0,0,0}');
@@ -32,3 +33,34 @@ describe('getShipRectangle', () => {
     expect(new Ship(4, 5, 7, HORIZONTAL).getShipRectangle().toString()).toEqual('Rectangle{(5,7),(5,10)}');
   });
 });
+
+describe('coords', () => {
+  it('case 1', () => {
+    const coords = (new Ship(1)).coords();
+    expect(Coord.arrayStrictOrderEqual([new Coord(0, 0)], coords)).toBeTruthy();
+  });
+  it('case 2', () => {
+    const coords = (new Ship(3, 4, 5, HORIZONTAL)).coords();
+    expect(Coord.arrayStrictOrderEqual([new Coord(4, 5), new Coord(4, 6), new Coord(4, 7)], coords)).toBeTruthy();
+    expect(Coord.arrayStrictOrderEqual([new Coord(4, 5), new Coord(4, 6), new Coord(7, 7)], coords)).toBeFalsy();
+  });
+  it('case 3', () => {
+    const coords = (new Ship(3, 4, 5, VERTICAL)).coords();
+    expect(Coord.arrayStrictOrderEqual([new Coord(4, 5), new Coord(5, 5), new Coord(6, 5)], coords)).toBeTruthy();
+    expect(Coord.arrayStrictOrderEqual([new Coord(4, 5), new Coord(5, 5), new Coord(5, 5)], coords)).toBeFalsy();
+  });
+});
+
+describe('isInMap', () => {
+  it('horizontal', () => {
+    let ship = new Ship(4, 7, 7, HORIZONTAL);
+    expect(ship.isInMap(10)).toBeFalsy();
+    ship = new Ship(4, 7, 7, HORIZONTAL);
+    expect(ship.isInMap(10)).toBeFalsy();
+    ship = new Ship(3, 9, 7, HORIZONTAL);
+    expect(ship.isInMap(10)).toBeTruthy();
+    ship = new Ship(3, 7, 9, VERTICAL);
+    expect(ship.isInMap(10)).toBeTruthy();
+  });
+});
+

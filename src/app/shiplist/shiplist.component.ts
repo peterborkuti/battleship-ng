@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Ship } from '../ships/ship';
 import { ShipService } from '../ships/ship.service';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgbSlide } from '@ng-bootstrap/ng-bootstrap/';
+import { VisualShip } from '../ships/visualship';
 
 @Component({
   selector: 'app-shiplist',
@@ -11,8 +11,8 @@ import { NgbSlide } from '@ng-bootstrap/ng-bootstrap/';
   providers: [NgbCarouselConfig]
 })
 export class ShiplistComponent implements OnInit {
-  ships: Ship[];
-  @Output() onActiveChanged = new EventEmitter<Ship>();
+  ships: VisualShip[];
+  @Output() onActiveChanged = new EventEmitter<VisualShip>();
 
   constructor(private shipService: ShipService, config: NgbCarouselConfig) {
     config.interval = 0;

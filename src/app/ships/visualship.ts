@@ -1,4 +1,4 @@
-export class Ship {
+export class VisualShip {
   id: number;
   name: string;
   imageFileName: string;

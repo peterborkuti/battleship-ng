@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Ship } from '../ships/ship';
+import { Ship } from '../autoplacement/ship';
+import { VisualShip } from '../ships/visualship';
 
 @Component({
   selector: 'app-placement',
@@ -15,7 +16,7 @@ export class PlacementComponent implements OnInit {
   ngOnInit() {
   }
 
-  newShipSelected(ship: Ship) {
+  newShipSelected(ship: VisualShip) {
     this.shipLength = ship.shipLength;
     console.log('placement:ship selected:', ship.name);
   }

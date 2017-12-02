@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, Input } from '@angular/core';
 import { CellComponent } from '../cell/cell.component';
 import { Cell } from '../cell/cell';
-import { Ship } from '../ships/ship';
-import { SimpleShip, HORIZONTAL } from '../autoplacement/simpleship';
 import { AutoPlacement } from '../autoplacement/autoplacement';
+import { Ship } from '../autoplacement/ship';
+import { Coord } from '../autoplacement/coord';
 
 @Component({
   selector: 'app-map',
@@ -14,6 +14,8 @@ import { AutoPlacement } from '../autoplacement/autoplacement';
 export class MapComponent implements OnInit {
   @Input() shipOrientation: number;
   @Input() shipLength: number;
+  @Input() rows = 10;
+  @Input() cols= 10;
 
   cells: Cell[][];
 
@@ -21,136 +23,80 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.cells = [];
-    for (let r = 0; r < 10; r++) {
+    for (let r = 0; r < this.rows; r++) {
       this.cells.push([]);
-       for (let c = 0; c < 10; c++) {
+       for (let c = 0; c < this.cols; c++) {
          this.cells[r].push(new Cell(r, c, 'btn-primary', 'btn-secondary', 'btn-success'));
        }
     }
   }
 
-  private getShipRectangle(row: number, col: number,
-      orientation: number = this.shipOrientation,
-      len: number = this.shipLength) {
+  shipCanBePlaced(cell: Cell): {coords: Coord[], ship: Ship} {
+    const ship = new Ship(this.shipLength, cell.row, cell.col, this.shipOrientation);
 
-    let deltaRow = 1;
-    let deltaCol = 1;
+    const retVal = {coords: [], ship: ship};
 
-    if (orientation === HORIZONTAL) {
-      deltaCol = len;
-    } else {
-      deltaRow = len;
+    const coords = ship.coords();
+
+    if (!ship.isInMap(this.rows, this.cols)) {
+      return retVal;
     }
 
-    row = Math.min(10 - deltaRow, row);
-    col = Math.min(10 - deltaCol, col);
-
-    return {
-      topLeft: {row: row, col: col},
-      bottomRight: {row: row + deltaRow - 1, col: col + deltaCol - 1}};
-  }
-
-  shipCoords(row: number, col: number,
-      orientation: number = this.shipOrientation,
-      len: number = this.shipLength) {
-
-    const ship = this.getShipRectangle(row, col, orientation, len);
-
-    const coords = [];
-    for (let r = ship.topLeft.row; r <= ship.bottomRight.row; r++) {
-      for (let c = ship.topLeft.col; c <= ship.bottomRight.col; c++) {
-        coords.push({row: r, col: c});
-      }
+    if (this.occupiedAny(coords)) {
+      return retVal;
     }
 
-    return coords;
+    return {coords, ship};
   }
 
-  neighbourhoodRectangle(row: number, col: number,
-      orientation: number = this.shipOrientation,
-      len: number = this.shipLength) {
+  mouseEnteredIntoCell(cell: Cell) {
+    const instance = this;
+    const canBePlaced = this.shipCanBePlaced(cell);
 
-    const ship = this.getShipRectangle(row, col, orientation, len);
-
-    const row0 = Math.max(0, ship.topLeft.row - 1);
-    const col0 = Math.max(0, ship.topLeft.col - 1);
-    const row1 = Math.min(9, ship.bottomRight.row + 1);
-    const col1 = Math.min(9, ship.bottomRight.col + 1);
-
-    return {
-      topLeft: {row: row0, col: col0},
-      bottomRight: {row: row1, col: col1}};
-  }
-
-  neighbourhood(row: number, col: number,
-      orientation: number = this.shipOrientation,
-      len: number = this.shipLength) {
-
-    const rect = this.neighbourhoodRectangle(row, col, orientation, len);
-
-    const coords = [];
-    for (let r = rect.topLeft.row; r <= rect.bottomRight.row; r++) {
-      for (let c = rect.topLeft.col; c <= rect.bottomRight.col; c++) {
-        coords.push({row: r, col: c});
-      }
+    if (canBePlaced.coords.length > 0) {
+      canBePlaced.coords.forEach(e => {
+        instance.cells[e.row][e.col].highLight();
+      });
     }
-
-    return coords;
   }
 
-  mouseEnteredIntoCell(cell) {
-    const cells = this.neighbourhood(cell.row, cell.col);
-    if (this.occupiedAny(cells)) {
-      return;
+  mouseLeavedCell(cell: Cell) {
+    const instance = this;
+    const canBePlaced = this.shipCanBePlaced(cell);
+
+    if (canBePlaced.coords.length > 0) {
+      canBePlaced.coords.forEach(e => {
+        instance.cells[e.row][e.col].unHighlight();
+      });
     }
-
-    this.shipCoords(cell.row, cell.col).forEach(e => {
-      this.cells[e.row][e.col].highLight();
-    });
-  }
-
-  mouseLeavedCell(cell) {
-    const cells = this.neighbourhood(cell.row, cell.col);
-    if (this.occupiedAny(cells)) {
-      return;
-    }
-
-    this.shipCoords(cell.row, cell.col).forEach(e => {
-      this.cells[e.row][e.col].unHighlight();
-    });
   }
 
   cellClicked(cell: Cell) {
+    const instance = this;
     if (cell.isSet()) {
       const coords = cell.getShipCoords();
+
       coords.forEach(c => {
-        this.cells[c.row][c.col].resetCell();
+        instance.cells[c.row][c.col].resetCell();
       });
 
+      this.mouseEnteredIntoCell(cell);
+
       return;
     }
 
-    const cells = this.neighbourhood(cell.row, cell.col);
-    if (this.occupiedAny(cells)) {
-      return;
+    const canBePlaced = this.shipCanBePlaced(cell);
+
+    if (canBePlaced.coords.length > 0) {
+      canBePlaced.coords.forEach(c => {
+        instance.cells[c.row][c.col].setShip(canBePlaced.ship);
+      });
     }
-
-    this.setCellsForShip(cell.row, cell.col);
   }
 
-  setCellsForShip(row: number, col: number,
-      orientation: number = this.shipOrientation,
-      len: number = this.shipLength) {
-
-        const cells = this.shipCoords(row, col, orientation, len);
-
-        cells.forEach(e => {
-          this.cells[e.row][e.col].setCell(cells);
-        });
-  }
-
-  occupiedAny(coords) {
-    return coords.some(e => this.cells[e.row][e.col].isSet());
+  occupiedAny(coords: Coord[]) {
+    const instance = this;
+    return coords.some(e => instance.cells[e.row][e.col].isSet());
   }
 
   /**
@@ -165,10 +111,13 @@ export class MapComponent implements OnInit {
     }
   }
 
-  placeShips(ships: SimpleShip[]) {
+  private placeShips(ships: Ship[]) {
     const instance = this;
+
     ships.forEach(function(ship) {
-      instance.setCellsForShip(ship.row, ship.col, ship.orientation, ship.len);
+      ship.coords().forEach(function(coord) {
+        instance.cells[coord.row][coord.col].setShip(ship);
+      });
     });
   }
 

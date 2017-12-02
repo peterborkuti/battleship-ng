@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SimpleShip } from './simpleship';
 import { AutoPlacement } from './autoplacement';
 
 @Component({

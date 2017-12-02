@@ -1,5 +1,6 @@
 import { Rectangle } from './rectangle';
 import { Coord } from './coord';
+import { ShipState } from './shipstate';
 
 export const HORIZONTAL = 0;
 export const VERTICAL = 1;
@@ -12,22 +13,31 @@ export class Ship {
     public col: number = 0,
     public orientation: number = HORIZONTAL) {}
 
+  setState(state: ShipState) {
+    this.row = state.coord.row;
+    this.col = state.coord.col;
+    this.orientation = state.orientation;
+  }
+
   toString() {
     return 'Ship{' + [this.len, this.row, this.col, this.orientation].join(',') + '}';
   }
 
-  isInMap(rows: number = 10, cols: number = 10): boolean {
+  isInMap(rows: number = 10, cols: number = rows): boolean {
+    if (this.orientation === VERTICAL) {
+      return this.row + this.len <= rows;
+    }
 
-    return false;
+    return this.col + this.len <= cols;
   }
 
   isNotOverlappedWith(ship: Ship): boolean {
-    const shipCoords = ship.coords().join(';');
+    const shipCoords = ship.coords();
 
-    const notOverlapped =
-      this.coords().every(function(c) { return shipCoords.indexOf(c.toString()) === -1; });
+    const overlapped =
+      this.coords().some(function(c) { return c.isAmongCoords(shipCoords); });
 
-    return notOverlapped;
+    return !overlapped;
   }
 
   coords(): Coord[] {

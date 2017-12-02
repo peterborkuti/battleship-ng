@@ -1,9 +1,12 @@
+import { Ship } from '../autoplacement/ship';
+import { Coord } from '../autoplacement/coord';
+
 export class Cell {
   private oldStyle: string;
   public style: string;
   private highlightBackup: string;
   private set: boolean;
-  private shipCoords = [];
+  private ship: Ship;
 
   constructor (public readonly row: number, public readonly col: number,
      public readonly unsetStyle: string,
@@ -14,19 +17,18 @@ export class Cell {
        this.set = false;
      }
 
-  isSet() {
+  isSet(): boolean {
     return this.set;
   }
 
-  getShipCoords() {
-    return this.shipCoords;
+  getShipCoords(): Coord[] {
+    return this.ship.coords();
   }
 
-  setCell(shipCoords) {
-
+  setShip(ship: Ship) {
     if (!this.set) {
       this.set = true;
-      this.shipCoords = shipCoords;
+      this.ship = ship;
       this.highlightBackup = this.setStyle;
       this.style = this.setStyle;
     } else {
@@ -37,7 +39,7 @@ export class Cell {
   resetCell() {
     this.highlightBackup = this.unsetStyle;
     this.style = this.unsetStyle;
-    this.shipCoords = [];
+    this.ship = null;
     this.set = false;
   }
 
