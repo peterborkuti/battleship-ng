@@ -34,7 +34,7 @@ export class AutoPlacement {
 
     if (!lastShip.isInMap(this.mapSize)) { return false; }
 
-    return ships.every(lastShip.isNotOverlappedWith);
+    return ships.every(lastShip.isNotOverlappedWith, lastShip);
   }
 
   isSolution(ships: Ship[]) {
