@@ -4,6 +4,7 @@ import { Cell } from '../cell/cell';
 import { AutoPlacement } from '../autoplacement/autoplacement';
 import { Ship } from '../autoplacement/ship';
 import { Coord } from '../autoplacement/coord';
+import { Cells } from '../cell/cells';
 
 @Component({
   selector: 'app-map',
@@ -17,18 +18,12 @@ export class MapComponent implements OnInit {
   @Input() rows = 10;
   @Input() cols= 10;
 
-  cells: Cell[][];
+  cells: Cells;
 
   constructor() {}
 
   ngOnInit() {
-    this.cells = [];
-    for (let r = 0; r < this.rows; r++) {
-      this.cells.push([]);
-       for (let c = 0; c < this.cols; c++) {
-         this.cells[r].push(new Cell(r, c, 'btn-primary', 'btn-secondary', 'btn-success'));
-       }
-    }
+    this.cells = new Cells(this.rows, this.cols);
   }
 
   shipCanBePlaced(cell: Cell): {coords: Coord[], ship: Ship} {
@@ -42,7 +37,7 @@ export class MapComponent implements OnInit {
       return retVal;
     }
 
-    if (this.occupiedAny(coords)) {
+    if (this.cells.occupiedAny(coords)) {
       return retVal;
     }
 
@@ -50,35 +45,18 @@ export class MapComponent implements OnInit {
   }
 
   mouseEnteredIntoCell(cell: Cell) {
-    const instance = this;
-    const canBePlaced = this.shipCanBePlaced(cell);
-
-    if (canBePlaced.coords.length > 0) {
-      canBePlaced.coords.forEach(e => {
-        instance.cells[e.row][e.col].highLight();
-      });
-    }
+    this.cells.highLightCoords(this.shipCanBePlaced(cell).coords);
   }
 
   mouseLeavedCell(cell: Cell) {
-    const instance = this;
-    const canBePlaced = this.shipCanBePlaced(cell);
-
-    if (canBePlaced.coords.length > 0) {
-      canBePlaced.coords.forEach(e => {
-        instance.cells[e.row][e.col].unHighlight();
-      });
-    }
+    this.cells.unHighLightCoords(this.shipCanBePlaced(cell).coords);
   }
 
   cellClicked(cell: Cell) {
     const instance = this;
-    if (cell.isSet()) {
-      const coords = cell.getShipCoords();
 
-      coords.forEach(c => {
-        instance.cells[c.row][c.col].resetCell();
-      });
+    if (cell.isSet()) {
+      this.cells.removeShip(cell.getCoord());
 
       this.mouseEnteredIntoCell(cell);
 
@@ -87,45 +65,20 @@ export class MapComponent implements OnInit {
 
     const canBePlaced = this.shipCanBePlaced(cell);
 
-    if (canBePlaced.coords.length > 0) {
-      canBePlaced.coords.forEach(c => {
-        instance.cells[c.row][c.col].setShip(canBePlaced.ship);
-      });
+    if (canBePlaced.coords.length === 0) {
+      return;
     }
-  }
 
-  occupiedAny(coords: Coord[]) {
-    const instance = this;
-    return coords.some(e => instance.cells[e.row][e.col].isSet());
-  }
+    // this.cells.unHighLightCoords(canBePlaced.coords);
 
-  /**
-   * AutoPlacement
-   * @memberof MapComponent
-   */
-  clearBoard() {
-    for (let r = 0; r < 10; r++) {
-      for (let c = 0; c < 10; c++) {
-        this.cells[r][c].resetCell();
-      }
-    }
-  }
-
-  private placeShips(ships: Ship[]) {
-    const instance = this;
-
-    ships.forEach(function(ship) {
-      ship.coords().forEach(function(coord) {
-        instance.cells[coord.row][coord.col].setShip(ship);
-      });
-    });
+    this.cells.placeShip(canBePlaced.ship);
   }
 
   autoPlacementHandler() {
     const autoPlacement: AutoPlacement = new AutoPlacement([5, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2], 10);
     const ships = autoPlacement.placeShips();
 
-    this.clearBoard();
-    this.placeShips(ships);
+    this.cells.clearBoard();
+    this.cells.placeShips(ships);
   }
 }

@@ -25,6 +25,10 @@ export class Cell {
     return this.ship.coords();
   }
 
+  getCoord(): Coord {
+    return new Coord(this.row, this.col);
+  }
+
   setShip(ship: Ship) {
     if (!this.set) {
       this.set = true;
