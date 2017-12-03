@@ -1,5 +1,6 @@
-import { Ship, VERTICAL, HORIZONTAL } from '../../src/app/autoplacement/ship';
+import { Ship } from '../../src/app/autoplacement/ship';
 import { Coord } from '../../src/app/autoplacement/coord';
+import { VERTICAL, HORIZONTAL } from '../../src/app/autoplacement/shipstate';
 describe('foundation', () => {
   it('should create', () => {
     expect((new Ship(0)).toString()).toBe('Ship{0,0,0,0}');
