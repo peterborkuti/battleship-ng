@@ -1,0 +1,50 @@
+{
+  "shipsData":
+  [
+      {
+        "id": 1,
+        "name": "Carrier",
+        "imageFileName": "USS_Nimitz_(CVN-68).jpg",
+        "description": "It is a 5 cells length ship. You can place one on the map.",
+        "alowedNumberOfShips": 1,
+        "imageFileDescription": "USS Nimitz (CVN-68) off the coast of San Diego in July 2009. Image is from Wikipedia",
+        "shipLength": 5
+      },
+      {
+        "id": 2,
+        "name": "Battleship",
+        "imageFileName": "BB61_USS_Iowa_BB61_broadside_USN.jpg",
+        "description": "It is a 4 cells length ship. You can place two on the map.",
+        "alowedNumberOfShips": 2,
+        "imageFileDescription": "The firepower of a battleship demonstrated by USS Iowa (c. 1984). The muzzle blasts distort the ocean surface.",
+        "shipLength": 4
+      },
+      {
+        "id": 3,
+        "name": "Cruiser",
+        "imageFileName": "USS_Port_Royal_CG-73.jpg",
+        "description": "It is a 3 cells length ship. You can place three on the map.",
+        "alowedNumberOfShips": 3,
+        "imageFileDescription": "USS Port Royal, a Ticonderoga-class guided missile cruiser, launched in 1992. Image is from Wikipedia",
+        "shipLength": 3
+      },
+      {
+        "id": 4,
+        "name": "Submarine",
+        "imageFileName": "US_Navy_040730-N-1234E-002_PCU_Virginia_(SSN_774)_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg",
+        "description": "It is a 3 cells length ship. You can place four on the map.",
+        "alowedNumberOfShips": 4,
+        "imageFileDescription": "Virginia-class submarine underway in Groton, Connecticut, July 2004. Image is from Wikipedia",
+        "shipLength": 3
+      },
+      {
+        "id": 5,
+        "name": "Destroyer",
+        "imageFileName": "USS_Winston_S._Churchill.jpg",
+        "description": "It is a 2 cells length ship. You can place five on the map.",
+        "alowedNumberOfShips": 5,
+        "imageFileDescription": "USS Winston S. Churchill, an Arleigh Burke-class guided missile destroyer of the United States Navy. Image is from Wikipedia",
+        "shipLength": 2
+      }
+  ]
+}
