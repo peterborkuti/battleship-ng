@@ -1,19 +1,21 @@
-<div class="container">
-  <div class="row">
-    <div class="col-5">
-      <app-enemymap></app-enemymap>
-    </div>
-    <div class="col-5 offset-2">
-      <app-mymap></app-mymap>
-    </div>
+<div class="container-fluid">
+  <div class="row equal">
+      <div class="col-sm-2">
+      <button class="btn btn-primary" routerLink="/placement">New Game</button>
+      </div>
+      <div class="col-sm-2">
+      <button class="btn btn-secondary" routerLink="/exit">Exit</button>
+      </div>
   </div>
 
   <div class="row">
-    <div class="col-2">
-      <button class="btn btn-primary" routerLink="/placement">New Game</button>
-    </div>
-    <div class="col-2 offset-1">
-      <button class="btn btn-secondary" routerLink="/exit">Exit</button>
-    </div>
+      <div class="col-md">
+        <app-enemymap [map]="enemyMap"></app-enemymap>
+
+      </div>
+
+      <div class="col-md">
+        <app-mymap [map]="myMap"></app-mymap>
+      </div>
   </div>
 </div>

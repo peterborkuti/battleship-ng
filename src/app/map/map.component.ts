@@ -21,6 +21,7 @@ export class MapComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    console.log('Map component initialized:', this.map.cells);
   }
 
   private getShip(cell: Cell): Ship {
