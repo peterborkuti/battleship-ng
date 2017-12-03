@@ -1,10 +1,8 @@
-<button (click)="autoPlacementHandler()">Autoplacement</button>
-
 <!-- map begin -->
 
 <table class="table table-bordered">
 
-<tr *ngFor="let cellRow of cells.cells; let r = index">
+<tr *ngFor="let cellRow of map.cells; let r = index">
   <td *ngFor="let cell of cellRow; let c = index">
     <app-cell [cell]="cell"
     (onClick)="cellClicked($event)"

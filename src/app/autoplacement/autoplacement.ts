@@ -1,5 +1,5 @@
-import { Ship, NUMBER_OF_ORIENTATIONS } from './ship';
-import { ShipState } from './shipstate';
+import { Ship } from './ship';
+import { ShipState, NUMBER_OF_ORIENTATIONS  } from './shipstate';
 import { Coord } from './coord';
 
 export class AutoPlacement {

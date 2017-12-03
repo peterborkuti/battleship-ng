@@ -1,12 +1,28 @@
 
 <div class="container-fluid">
-      <app-emptymap [shipOrientation]="shipOrientation" [shipLength]="shipLength"></app-emptymap>
-
+  <div class="row equal">
+      <div class="col-sm-2">
+      <button class="btn btn-primary" routerLink="/battle">Done</button>
+      </div>
+      <div class="col-sm-2">
+      <button class="btn btn-secondary" routerLink="/exit">Exit</button>
+    </div>
+      <div class="col-sm-2">
+      <button class="btn btn-danger" (click)="autoPlacementHandler()">Autoplacement</button>
+    </div>
+      <div class="col-sm-2 offset-sm-2">
       <app-orientationchooser (onOrientationChange)="shipOrientationChanged($event)"></app-orientationchooser>
-      <app-shiplist (onActiveChanged)="newShipSelected($event)"></app-shiplist>
+    </div>
+  </div>
 
+  <div class="row">
+      <div class="col-md">
+        <app-emptymap [map]="map" [shipOrientation]="shipOrientation" [shipLength]="shipLength"></app-emptymap>
+      </div>
 
-      <button class="btn btn-primary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/battle']">Done</button>
-      <button class="btn btn-secondary" routerLinkActive="active" [routerLinkActiveOptions]="{exact: exact}" [routerLink]="['/exit']">Exit</button>
+      <div class="col-md">
+        <app-shiplist (onActiveChanged)="newShipSelected($event)"></app-shiplist>
+      </div>
+  </div>
 </div>
 

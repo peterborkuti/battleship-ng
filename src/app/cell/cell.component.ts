@@ -21,7 +21,7 @@ export class CellComponent implements OnInit {
   ngOnInit() {
   }
 
-  mouseEnteredIntoCell(event) {
+  mouseEnteredIntoCell() {
     this.onMouseEnter.emit(this.cell);
   }
 
@@ -31,10 +31,6 @@ export class CellComponent implements OnInit {
 
   cellIsClicked() {
     this.onClick.emit(this.cell);
-  }
-
-  cellIsDblClicked() {
-    this.onDblClick.emit(this.cell);
   }
 
 }

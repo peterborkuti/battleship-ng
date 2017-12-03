@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { HORIZONTAL, VERTICAL } from '../autoplacement/ship';
+import { HORIZONTAL, VERTICAL } from '../autoplacement/shipstate';
 
 
 const PATH_PREFIX = 'assets/Ship-icon-';

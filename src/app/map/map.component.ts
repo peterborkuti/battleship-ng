@@ -4,7 +4,7 @@ import { Cell } from '../cell/cell';
 import { AutoPlacement } from '../autoplacement/autoplacement';
 import { Ship } from '../autoplacement/ship';
 import { Coord } from '../autoplacement/coord';
-import { Cells } from '../cell/cells';
+import { Map } from './map';
 
 @Component({
   selector: 'app-map',
@@ -15,70 +15,40 @@ import { Cells } from '../cell/cells';
 export class MapComponent implements OnInit {
   @Input() shipOrientation: number;
   @Input() shipLength: number;
-  @Input() rows = 10;
-  @Input() cols= 10;
 
-  cells: Cells;
+  @Input() map: Map;
 
   constructor() {}
 
   ngOnInit() {
-    this.cells = new Cells(this.rows, this.cols);
   }
 
-  shipCanBePlaced(cell: Cell): {coords: Coord[], ship: Ship} {
-    const ship = new Ship(this.shipLength, cell.row, cell.col, this.shipOrientation);
-
-    const retVal = {coords: [], ship: ship};
-
-    const coords = ship.coords();
-
-    if (!ship.isInMap(this.rows, this.cols)) {
-      return retVal;
-    }
-
-    if (this.cells.occupiedAny(coords)) {
-      return retVal;
-    }
-
-    return {coords, ship};
+  private getShip(cell: Cell): Ship {
+    return new Ship(this.shipLength, cell.row, cell.col, this.shipOrientation);
   }
 
   mouseEnteredIntoCell(cell: Cell) {
-    this.cells.highLightCoords(this.shipCanBePlaced(cell).coords);
+    this.map.highLightShipIfPlaceable(this.getShip(cell));
   }
 
   mouseLeavedCell(cell: Cell) {
-    this.cells.unHighLightCoords(this.shipCanBePlaced(cell).coords);
+    this.map.unHighLightShipIfPlaceable(this.getShip(cell));
   }
 
   cellClicked(cell: Cell) {
-    const instance = this;
-
-    if (cell.isSet()) {
-      this.cells.removeShip(cell.getCoord());
-
+    if (this.map.removeShip(new Coord(cell.row, cell.col))) {
       this.mouseEnteredIntoCell(cell);
 
       return;
     }
 
-    const canBePlaced = this.shipCanBePlaced(cell);
-
-    if (canBePlaced.coords.length === 0) {
-      return;
-    }
-
-    // this.cells.unHighLightCoords(canBePlaced.coords);
-
-    this.cells.placeShip(canBePlaced.ship);
+    this.map.placeShipIfPlaceable(this.getShip(cell));
   }
 
   autoPlacementHandler() {
     const autoPlacement: AutoPlacement = new AutoPlacement([5, 4, 3, 3, 3, 3, 3, 3, 2, 2, 2], 10);
     const ships = autoPlacement.placeShips();
 
-    this.cells.clearBoard();
-    this.cells.placeShips(ships);
+    this.map.placeShips(ships);
   }
 }

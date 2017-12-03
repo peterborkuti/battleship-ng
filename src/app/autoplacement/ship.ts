@@ -1,10 +1,6 @@
 import { Rectangle } from './rectangle';
 import { Coord } from './coord';
-import { ShipState } from './shipstate';
-
-export const HORIZONTAL = 0;
-export const VERTICAL = 1;
-export const NUMBER_OF_ORIENTATIONS = 2;
+import { ShipState, HORIZONTAL, VERTICAL } from './shipstate';
 
 export class Ship {
   constructor(
@@ -17,6 +13,10 @@ export class Ship {
     this.row = state.coord.row;
     this.col = state.coord.col;
     this.orientation = state.orientation;
+  }
+
+  setCoord(coord: Coord) {
+    this.setState(new ShipState(coord, this.orientation));
   }
 
   toString() {

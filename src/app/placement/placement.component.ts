@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Ship } from '../autoplacement/ship';
 import { VisualShip } from '../ships/visualship';
+import { Map } from '../map/map';
 
 @Component({
   selector: 'app-placement',
@@ -10,8 +11,11 @@ import { VisualShip } from '../ships/visualship';
 export class PlacementComponent implements OnInit {
   shipLength: number;
   shipOrientation: string;
+  map: Map;
 
-  constructor() { }
+  constructor() {
+    this.map = new Map(10, 10);
+  }
 
   ngOnInit() {
   }
@@ -24,6 +28,11 @@ export class PlacementComponent implements OnInit {
   shipOrientationChanged(orientation) {
     this.shipOrientation = orientation;
     console.log('placement: ship orientation changed:', orientation);
+  }
+
+  autoPlacementHandler() {
+    this.map.placeShipsAutomatically();
+
   }
 
 }
