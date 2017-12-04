@@ -20,6 +20,7 @@ import { HttpModule } from '@angular/http';
 import { ShipService } from './ships/ship.service';
 import { OrientationchooserComponent } from './orientationchooser/orientationchooser.component';
 import { AutoplacementComponent } from './autoplacement/autoplacement.component';
+import { MapService } from './map/map.service';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { AutoplacementComponent } from './autoplacement/autoplacement.component'
     HttpModule
   ],
   entryComponents: [ CellComponent ],
-  providers: [ ShipService ],
+  providers: [ ShipService, MapService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
