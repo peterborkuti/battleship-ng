@@ -40,6 +40,14 @@ export class Cell {
     }
   }
 
+  getShip(): Ship {
+    if (this.isSet()) {
+      return this.ship;
+    }
+
+    return null;
+  }
+
   resetCell() {
     this.highlightBackup = this.unsetStyle;
     this.style = this.unsetStyle;

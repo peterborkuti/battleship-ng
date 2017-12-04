@@ -9,6 +9,7 @@ export class MapService {
   constructor() {
     this.myMap = new Map(10, 10);
     this.enemyMap = new Map(10, 10);
+    console.log('Maps initialized');
   }
 
   getEnemyMap(): Map {

@@ -5,8 +5,7 @@ import { MapService } from '../map/map.service';
 @Component({
   selector: 'app-battle',
   templateUrl: './battle.component.html',
-  styleUrls: ['./battle.component.css'],
-  providers: [ MapService ]
+  styleUrls: ['./battle.component.css']
 })
 export class BattleComponent implements OnInit {
   enemyMap: Map;

@@ -7,8 +7,7 @@ import { MapService } from '../map/map.service';
 @Component({
   selector: 'app-placement',
   templateUrl: './placement.component.html',
-  styleUrls: ['./placement.component.css'],
-  providers: [ MapService ]
+  styleUrls: ['./placement.component.css']
 })
 export class PlacementComponent implements OnInit {
   shipLength: number;

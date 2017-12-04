@@ -10,7 +10,51 @@ class Placeable {
     public readonly coords: Coord[] = []) {}
 }
 
+class Ships {
+  ships: Ship[];
+
+  constructor() {
+    this.ships = [];
+  }
+
+  set(ships: Ship[]) {
+    this.ships = ships;
+  }
+
+  add(ship: Ship) {
+    this.ships.push(ship);
+  }
+
+  remove(ship: Ship) {
+    if (ship == null) {
+      return;
+    }
+
+    let i = 0;
+
+    for (; i < this.ships.length; i++) {
+      if (this.ships[i].toString() === ship.toString()) {
+        break;
+      }
+    }
+
+    if (i < this.ships.length) {
+      this.ships.splice(i, 1);
+    }
+  }
+
+  get(): Ship[] {
+    return this.ships;
+  }
+}
+
 export class Map extends Cells {
+  ships: Ships;
+
+  constructor(rows: number, cols: number) {
+    super(rows, cols);
+    this.ships = new Ships();
+  }
 
   shipCanBePlaced(ship: Ship): Placeable {
     const coords = ship.coords();
@@ -42,9 +86,15 @@ export class Map extends Cells {
     }
   }
 
+  placeShip(ship: Ship) {
+    super.placeShip(ship);
+    this.ships.add(ship);
+  }
+
   removeShip(coord: Coord): boolean {
     if (this.occupiedAny([coord])) {
       super.removeShip(coord);
+      this.ships.remove(this.cells[coord.row][coord.col].getShip());
 
       return true;
     }
@@ -55,6 +105,7 @@ export class Map extends Cells {
   placeShips(ships: Ship[]) {
     this.clearBoard();
     super.placeShips(ships);
+    this.ships.set(ships);
   }
 
   placeShipsAutomatically() {
