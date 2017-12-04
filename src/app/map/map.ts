@@ -10,7 +10,7 @@ class Placeable {
     public readonly coords: Coord[] = []) {}
 }
 
-class Ships {
+export class Ships {
   ships: Ship[];
 
   constructor() {
