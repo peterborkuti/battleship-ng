@@ -21,6 +21,7 @@ export class BattleComponent implements OnInit {
     this.enemyMap = this.mapService.getEnemyMap();
 
     const shipLengths = this.getShipLengths(this.myMap.ships.get());
+    console.log('shipLengths on myMap:', shipLengths);
 
     const ap = new AutoPlacement(shipLengths, 10);
     this.enemyMap.placeShips(ap.placeShips());

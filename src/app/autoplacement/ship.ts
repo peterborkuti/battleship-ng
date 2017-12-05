@@ -9,6 +9,10 @@ export class Ship {
     public col: number = 0,
     public orientation: number = HORIZONTAL) {}
 
+  getClone() {
+    return new Ship(this.len, this.row, this.col, this.orientation);
+  }
+
   setState(state: ShipState) {
     this.row = state.coord.row;
     this.col = state.coord.col;

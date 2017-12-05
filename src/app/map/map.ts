@@ -18,11 +18,11 @@ export class Ships {
   }
 
   set(ships: Ship[]) {
-    this.ships = ships;
+    this.ships = ships.map(function(e){ return e.getClone(); });
   }
 
   add(ship: Ship) {
-    this.ships.push(ship);
+    this.ships.push(ship.getClone());
   }
 
   remove(ship: Ship) {
@@ -34,7 +34,6 @@ export class Ships {
 
     for (; i < this.ships.length; i++) {
       if (this.ships[i].toString() === ship.toString()) {
-        console.log(i, this.ships[i].toString(), '===', ship.toString());
         break;
       }
     }
@@ -45,7 +44,7 @@ export class Ships {
   }
 
   get(): Ship[] {
-    return this.ships;
+    return this.ships.map(function(e){return e.getClone(); });
   }
 }
 

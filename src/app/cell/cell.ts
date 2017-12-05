@@ -32,7 +32,7 @@ export class Cell {
   setShip(ship: Ship) {
     if (!this.set) {
       this.set = true;
-      this.ship = ship;
+      this.ship = ship.getClone();
       this.highlightBackup = this.setStyle;
       this.style = this.setStyle;
     } else {
@@ -42,7 +42,7 @@ export class Cell {
 
   getShip(): Ship {
     if (this.isSet()) {
-      return this.ship;
+      return this.ship.getClone();
     }
 
     return null;
@@ -51,7 +51,8 @@ export class Cell {
   resetCell() {
     this.highlightBackup = this.unsetStyle;
     this.style = this.unsetStyle;
-    this.ship = null;
+    // Map can not see the stored ship, because resetCell runs before removeShip
+    // this.ship = null;
     this.set = false;
   }
 
