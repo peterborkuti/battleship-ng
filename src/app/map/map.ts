@@ -34,6 +34,7 @@ export class Ships {
 
     for (; i < this.ships.length; i++) {
       if (this.ships[i].toString() === ship.toString()) {
+        console.log(i, this.ships[i].toString(), '===', ship.toString());
         break;
       }
     }
