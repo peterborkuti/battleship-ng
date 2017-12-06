@@ -93,8 +93,8 @@ export class Map extends Cells {
 
   removeShip(coord: Coord): boolean {
     if (this.occupiedAny([coord])) {
-      super.removeShip(coord);
       this.ships.remove(this.cells[coord.row][coord.col].getShip());
+      super.removeShip(coord);
 
       return true;
     }

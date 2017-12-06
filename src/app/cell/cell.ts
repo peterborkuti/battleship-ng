@@ -51,8 +51,7 @@ export class Cell {
   resetCell() {
     this.highlightBackup = this.unsetStyle;
     this.style = this.unsetStyle;
-    // Map can not see the stored ship, because resetCell runs before removeShip
-    // this.ship = null;
+    this.ship = null;
     this.set = false;
   }
 
