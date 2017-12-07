@@ -51,8 +51,8 @@ export class Ships {
 export class Map extends Cells {
   ships: Ships;
 
-  constructor(rows: number, cols: number) {
-    super(rows, cols);
+  constructor(rows: number, cols: number, coverShips: boolean = false) {
+    super(rows, cols, coverShips);
     this.ships = new Ships();
   }
 

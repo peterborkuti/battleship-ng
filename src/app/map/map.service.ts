@@ -8,7 +8,7 @@ export class MapService {
 
   constructor() {
     this.myMap = new Map(10, 10);
-    this.enemyMap = new Map(10, 10);
+    this.enemyMap = new Map(10, 10, true);
     console.log('Maps initialized');
   }
 

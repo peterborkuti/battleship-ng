@@ -11,7 +11,8 @@ export class Cell {
   constructor (public readonly row: number, public readonly col: number,
      public readonly unsetStyle: string,
      public readonly highLightStyle: string,
-     public readonly setStyle: string) {
+     public readonly setStyle: string,
+     public readonly coverShips: boolean = false) {
 
        this.style = unsetStyle;
        this.set = false;
@@ -33,8 +34,10 @@ export class Cell {
     if (!this.set) {
       this.set = true;
       this.ship = ship.getClone();
-      this.highlightBackup = this.setStyle;
-      this.style = this.setStyle;
+      if (!this.coverShips) {
+        this.highlightBackup = this.setStyle;
+        this.style = this.setStyle;
+      }
     } else {
       this.resetCell();
     }
@@ -49,8 +52,10 @@ export class Cell {
   }
 
   resetCell() {
-    this.highlightBackup = this.unsetStyle;
-    this.style = this.unsetStyle;
+    if (!this.coverShips) {
+      this.highlightBackup = this.unsetStyle;
+      this.style = this.unsetStyle;
+    }
     this.ship = null;
     this.set = false;
   }
@@ -62,5 +67,13 @@ export class Cell {
 
   unHighlight() {
     this.style = this.highlightBackup;
+  }
+
+  shoot() {
+    if (this.isSet()) {
+      this.style = this.setStyle;
+    } else {
+      this.style = this.highLightStyle;
+    }
   }
 }

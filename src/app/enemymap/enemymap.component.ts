@@ -16,4 +16,9 @@ export class EnemymapComponent extends MapComponent implements OnInit {
   ngOnInit() {
   }
 
+  cellClicked(event) {
+    console.log(event);
+    this.map.shoot(event.row, event.col);
+  }
+
 }
