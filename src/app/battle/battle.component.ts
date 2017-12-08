@@ -17,13 +17,22 @@ export class BattleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.myMap = this.mapService.getMyMap();
-    this.enemyMap = this.mapService.getEnemyMap();
+    let map = this.mapService.getMyMap();
+    const ships = map.ships.get();
 
-    const shipLengths = this.getShipLengths(this.myMap.ships.get());
+    const myMap = new Map(map.rows, map.cols, false);
+    myMap.placeShips(ships);
+    this.myMap = myMap;
+
+
+    map = this.mapService.getEnemyMap();
+    const shipLengths = this.getShipLengths(ships);
 
     const ap = new AutoPlacement(shipLengths, 10);
-    this.enemyMap.placeShips(ap.placeShips());
+    const enemyMap = new Map(map.rows, map.cols, true);
+    enemyMap.placeShips(ap.placeShips());
+    this.enemyMap = enemyMap;
+
   }
 
   getShipLengths(ships: Ship[]) {

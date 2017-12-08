@@ -1,28 +1,17 @@
 import { Ship } from './ship';
 import { ShipState, NUMBER_OF_ORIENTATIONS  } from './shipstate';
 import { Coord } from './coord';
+import { Utils } from './utils';
 
 export class AutoPlacement {
 
   possibilities: number[];
 
-  public static getNumbersFromZero(n: number) {
-    return Array(n).fill(0).map(Function.call, Number);
-  }
-
-  // Durstenfeld, Fisher and Yates
-  public static shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
   constructor (public readonly shipLengths: number[], public readonly mapSize: number) {}
 
   placeShips() {
-    this.possibilities = AutoPlacement.getNumbersFromZero(NUMBER_OF_ORIENTATIONS * this.mapSize * this.mapSize);
-    AutoPlacement.shuffleArray(this.possibilities);
+    this.possibilities = Utils.getNumbersFromZero(NUMBER_OF_ORIENTATIONS * this.mapSize * this.mapSize);
+    Utils.shuffleArray(this.possibilities);
 
     const ships = this.backtrack();
     console.log(ships);
