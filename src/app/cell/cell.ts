@@ -7,6 +7,7 @@ export class Cell {
   private highlightBackup: string;
   private set: boolean;
   private ship: Ship;
+  private disabled = false;
 
   constructor (public readonly row: number, public readonly col: number,
      public readonly unsetStyle: string,
@@ -17,6 +18,14 @@ export class Cell {
        this.style = unsetStyle;
        this.set = false;
      }
+
+  disable() {
+    this.disabled = true;
+  }
+
+  isDisabled(): boolean {
+    return this.disabled;
+  }
 
   isSet(): boolean {
     return this.set;

@@ -11,12 +11,14 @@
   <div class="row">
       <div class="col-md">
         <h3>Opponent's map</h3>
-        <app-enemymap [map]="enemyMap"></app-enemymap>
+        <h3 *ngIf="opponentWin">Win</h3>
+        <app-enemymap [map]="enemyMap" (hit)="hitOnEnemyMap($event)"></app-enemymap>
 
       </div>
 
       <div class="col-md">
         <h3>Your map</h3>
+        <h3 *ngIf="youWin">Win</h3>
         <app-mymap [map]="myMap"></app-mymap>
       </div>
   </div>

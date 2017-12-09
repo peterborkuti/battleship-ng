@@ -1,6 +1,7 @@
 import { Cell } from './cell';
 import { Ship } from '../autoplacement/ship';
 import { Coord } from '../autoplacement/coord';
+
 export class Cells {
   cells: Cell[][];
 
@@ -14,8 +15,9 @@ export class Cells {
     }
   }
 
-  public shoot(row: number, col: number) {
+  public shoot(row: number, col: number): boolean {
     this.cells[row][col].shoot();
+    return (this.cells[row][col].isSet());
   }
   public clearBoard() {
     for (let r = 0; r < this.rows; r++) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MapComponent } from '../map/map.component';
 import { Map } from '../map/map';
 
@@ -8,6 +8,7 @@ import { Map } from '../map/map';
   styleUrls: ['./enemymap.component.css']
 })
 export class EnemymapComponent extends MapComponent implements OnInit {
+@Output() hit = new EventEmitter();
 
   constructor() {
     super();
@@ -17,8 +18,15 @@ export class EnemymapComponent extends MapComponent implements OnInit {
   }
 
   cellClicked(event) {
-    console.log(event);
-    this.map.shoot(event.row, event.col);
+    if (this.map.isCellDisabled(event.row, event.col)) {
+      console.log('disabled');
+    } else {
+      console.log(event);
+      this.map.disableCell(event.row, event.col);
+      if (this.map.shoot(event.row, event.col)) {
+        this.hit.emit('0');
+      }
+    }
   }
 
 }

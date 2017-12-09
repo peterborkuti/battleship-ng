@@ -115,4 +115,12 @@ export class Map extends Cells {
     this.placeShips(ships);
   }
 
+  isCellDisabled(row: number, col: number) {
+    return this.cells[row][col].isDisabled();
+  }
+
+  disableCell(row: number, col: number) {
+    this.cells[row][col].disable();
+  }
+
 }

@@ -16,5 +16,9 @@ export class Utils {
     return Object.keys(a[0]).map(function(c) {
         return a.map(function(r) { return r[c]; });
     });
-}
+  }
+
+  public static sum(arr: number[]): number {
+      return arr.reduce(function(prev, curr) { return prev + curr; }, 0);
+  }
 }

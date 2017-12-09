@@ -9,7 +9,7 @@ class Ship {
     public index: number = -1,
     public pos: number = 0,
     public len: number = 0,
-    public ship: string) {}
+    public ship: string = '') {}
 
     getUndiscoveredPositions(): Coord[] {
       const places = [];
@@ -34,7 +34,7 @@ class Ship {
 }
 
 export class FirePlanner {
-  matrix = [][];
+  matrix = [];
 
   constructor(readonly rows = 10, readonly cols = 10) {
     for (let row = 0; row < rows; row++) {
@@ -66,7 +66,7 @@ export class FirePlanner {
 
     let emptyCell = new Coord(-1, -1);
 
-    for (let i = 0; i < chessCoords.length; i++ {
+    for (let i = 0; i < chessCoords.length; i++) {
       const c = chessCoords[i];
       if (this.matrix[c.row][c.col] === 0) {
         emptyCell = c;
