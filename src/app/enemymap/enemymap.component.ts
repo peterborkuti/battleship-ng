@@ -18,14 +18,8 @@ export class EnemymapComponent extends MapComponent implements OnInit {
   }
 
   cellClicked(event) {
-    if (this.map.isCellDisabled(event.row, event.col)) {
-      console.log('disabled');
-    } else {
-      console.log(event);
-      this.map.disableCell(event.row, event.col);
-      if (this.map.shoot(event.row, event.col)) {
+    if (this.map.shoot(event.row, event.col)) {
         this.hit.emit('0');
-      }
     }
   }
 

@@ -1,1 +1,6 @@
-
+.shoot {
+  background-image: url(/assets/close.svg);
+  background-size: contain !important;
+  background-repeat: no-repeat;
+  background-position: center;
+}

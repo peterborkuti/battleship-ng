@@ -16,9 +16,15 @@ export class Cells {
   }
 
   public shoot(row: number, col: number): boolean {
-    this.cells[row][col].shoot();
-    return (this.cells[row][col].isSet());
+    const cell = this.cells[row][col];
+    if (cell.isDisabled()) {
+      return false;
+    }
+
+    cell.shoot();
+    return cell.isSet();
   }
+
   public clearBoard() {
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
