@@ -2,6 +2,7 @@ import { Map } from '../map/map';
 import { AutoPlacement } from '../autoplacement/autoplacement';
 import { Utils } from '../autoplacement/utils';
 import { Ship } from '../autoplacement/ship';
+import { FirePlanner } from './fireplanner';
 
 export class Battle {
   enemyMap: Map;
@@ -9,6 +10,7 @@ export class Battle {
   opponentWin = false;
   youWin = false;
   numberOfShipCells: number;
+  private enemy: FirePlanner;
   private enemyHitCounter = 0;
 
   constructor(private mymap: Map, private enemymap: Map) {}
@@ -19,7 +21,14 @@ export class Battle {
     if (this.enemyHitCounter >= this.numberOfShipCells) {
       this.youWin = true;
     }
+  }
 
+  fire() {
+    const coord = this.enemy.fire();
+    const hit = this.myMap.shoot(coord.row, coord.col);
+    this.enemy.setMatrix(coord, hit);
+
+    console.log('fire:', coord, hit);
   }
 
   init() {
@@ -37,6 +46,9 @@ export class Battle {
     this.enemyMap = enemyMap;
 
     this.numberOfShipCells = Utils.sum(shipLengths);
+
+    this.enemy = new FirePlanner(this.mymap.rows, this.mymap.cols);
+
   }
 
   getShipLengths(ships: Ship[]) {

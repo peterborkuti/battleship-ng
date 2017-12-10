@@ -12,7 +12,7 @@
       <div class="col-md">
         <h3>Opponent's map</h3>
         <h3 *ngIf="opponentWin">Win</h3>
-        <app-enemymap [map]="enemyMap" (hit)="hitOnEnemyMap($event)"></app-enemymap>
+        <app-enemymap [map]="enemyMap" (hit)="hitOnEnemyMap($event)" (acceptedFire)="fire()"></app-enemymap>
 
       </div>
 

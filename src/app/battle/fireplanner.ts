@@ -2,6 +2,10 @@ import { Coord } from '../autoplacement/coord';
 import { Utils } from '../autoplacement/utils';
 import { HORIZONTAL, VERTICAL } from '../autoplacement/shipstate';
 
+export const MISS = 1;
+export const HIT = 2;
+export const SHIPFOUNDER = /02+.?|.?2+0/g;
+const UNDISCOVERED = 0;
 
 class Ship {
   constructor(
@@ -15,10 +19,10 @@ class Ship {
       const places = [];
 
       if (this.len > 0) {
-        if (this.ship[0] === '0') {
+        if (this.ship[0] === '' + UNDISCOVERED) {
           places.push(this.pos);
         }
-        if (this.ship[this.len - 1] === '0') {
+        if (this.ship[this.len - 1] === '' + UNDISCOVERED) {
           places.push(this.pos + this.len - 1);
         }
       }
@@ -40,7 +44,7 @@ export class FirePlanner {
     for (let row = 0; row < rows; row++) {
       this.matrix.push([]);
       for (let col = 0; col < cols; col++) {
-        this.matrix[row].push(0);
+        this.matrix[row].push(UNDISCOVERED);
       }
     }
   }
@@ -55,11 +59,19 @@ export class FirePlanner {
     return this.randomEmptyCell();
   }
 
-  randomTarget(targets: Coord[]) {
+  setMatrix(coord: Coord, hit: boolean) {
+    if (this.get(coord) !== UNDISCOVERED) {
+      console.error('place was already discovered!', coord);
+    } else {
+      this.set(coord, hit);
+    }
+  }
+
+  randomTarget(targets: Coord[]): Coord {
     return targets[Math.floor(Math.random() * targets.length)];
   }
 
-  randomEmptyCell() {
+  randomEmptyCell(): Coord {
     const chessCoords = this.getChessBoardBlackPosCoords();
 
     Utils.shuffleArray(chessCoords);
@@ -96,7 +108,7 @@ export class FirePlanner {
     return ship.getUndiscoveredPositions();
   }
 
-  getLengthiestShipFromMatrix() {
+  getLengthiestShipFromMatrix(): Ship {
     const rowShip = this.getLengthiestShipFromRows(this.matrix, HORIZONTAL);
     const colShip = this.getLengthiestShipFromCols();
 
@@ -111,7 +123,7 @@ export class FirePlanner {
     let maxShip: Ship = new Ship();
 
     for (let row = 0; row < this.rows; row++) {
-        const ship = this.getTheLengthiestShipFromLine(orientation, row, matrix[row].join());
+        const ship = this.getTheLengthiestShipFromLine(orientation, row, matrix[row].join(''));
 
         if (ship.len > maxShip.len) {
             maxShip = ship;
@@ -133,17 +145,31 @@ export class FirePlanner {
     let maxLen = 0;
     let shipResult: any;
 
-    const re = /02+.?|.?2+0/g;
+    const re = SHIPFOUNDER;
 
     while ((shipResult = re.exec(line)) !== null) {
       const ship = shipResult[0];
-      if (ship.length > maxLen) {
-        maxLen = ship.length;
+      const len = ship.replace(/[^2]*/g, '').length;
+      if (len > maxLen) {
+        maxLen = len;
         maxPos = shipResult.index;
         maxStr = ship;
+        if (maxPos > 0 && ship[0] === '' + HIT && line[maxPos - 1] === '' + UNDISCOVERED) {
+          maxStr = UNDISCOVERED + ship;
+          maxPos -= 1;
+        }
       }
     }
 
-    return new Ship(orientation, index, maxPos, maxLen);
+    return new Ship(orientation, index, maxPos, maxLen, maxStr);
   }
+
+  private get(coord: Coord): number {
+    return this.matrix[coord.row][coord.col];
+  }
+
+  private set(coord: Coord, hit: boolean) {
+    this.matrix[coord.row][coord.col] = (hit) ? HIT : MISS;
+  }
+
 }

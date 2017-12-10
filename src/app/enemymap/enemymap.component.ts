@@ -9,6 +9,7 @@ import { Map } from '../map/map';
 })
 export class EnemymapComponent extends MapComponent implements OnInit {
 @Output() hit = new EventEmitter();
+@Output() acceptedFire = new EventEmitter();
 
   constructor() {
     super();
@@ -18,8 +19,14 @@ export class EnemymapComponent extends MapComponent implements OnInit {
   }
 
   cellClicked(event) {
+    const acceptedFire = !this.map.isCellDisabled(event.row, event.col);
+
     if (this.map.shoot(event.row, event.col)) {
-        this.hit.emit('0');
+        this.hit.emit('');
+    }
+
+    if (acceptedFire) {
+      this.acceptedFire.emit('');
     }
   }
 
