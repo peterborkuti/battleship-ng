@@ -7,7 +7,7 @@ export const HIT = 2;
 export const SHIPFOUNDER = /02+.?|.?2+0/g;
 const UNDISCOVERED = 0;
 
-class Ship {
+export class Ship {
   constructor(
     public readonly orientation: number = HORIZONTAL,
     public index: number = -1,
@@ -17,20 +17,22 @@ class Ship {
 
     getUndiscoveredPositions(): Coord[] {
       const places = [];
+      const len = this.ship.length;
 
-      if (this.len > 0) {
+      if (len > 0) {
         if (this.ship[0] === '' + UNDISCOVERED) {
           places.push(this.pos);
         }
-        if (this.ship[this.len - 1] === '' + UNDISCOVERED) {
-          places.push(this.pos + this.len - 1);
+        if (this.ship[len - 1] === '' + UNDISCOVERED) {
+          places.push(this.pos + len - 1);
         }
       }
 
+      const instance = this;
       const goals: Coord[] =
         places.map(function(place) {
-          return (this.orientation === HORIZONTAL) ?
-            new Coord(this.index, place) : new Coord(place, this.index);
+          return (instance.orientation === HORIZONTAL) ?
+            new Coord(instance.index, place) : new Coord(place, instance.index);
         });
 
       return goals;

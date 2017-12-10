@@ -1,4 +1,6 @@
-import { SHIPFOUNDER, FirePlanner } from '../../src/app/battle/fireplanner';
+import { SHIPFOUNDER, FirePlanner, Ship } from '../../src/app/battle/fireplanner';
+import { Coord } from '../../src/app/autoplacement/coord';
+import { HORIZONTAL, VERTICAL } from '../../src/app/autoplacement/shipstate';
 
 describe('shipfounder regexp', () => {
   it('should not find anything', () => {
@@ -54,3 +56,23 @@ describe('getTheLengthiestShipFromRows', () => {
     expect(ls(m2, 0).ship).toBe('02220');
   });
 });
+
+
+describe('ship in fireplanner', () => {
+  it('should get undiscovered positions', () => {
+    let s = new Ship(HORIZONTAL, 0, 0, 1, '020');
+    expect(
+      s.getUndiscoveredPositions()).
+      toEqual([new Coord(0, 0), new Coord(0, 2)]);
+    expect(
+      new Ship(HORIZONTAL, 3, 4, 1, '020').getUndiscoveredPositions()).
+      toEqual([new Coord(3, 4), new Coord(3, 6)]);
+    expect(
+      new Ship(VERTICAL, 0, 0, 1, '020').getUndiscoveredPositions()).
+      toEqual([new Coord(0, 0), new Coord(2, 0)]);
+    expect(
+      new Ship(VERTICAL, 3, 4, 1, '020').getUndiscoveredPositions()).
+      toEqual([new Coord(4, 3), new Coord(6, 3)]);
+  });
+});
+
