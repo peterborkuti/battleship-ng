@@ -18,6 +18,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
+Run `ng build --prod --base-href='https://peterborkuti.github.io/battleship-ng/'` than
+`ngh`. This will push gh-pages branch onto GitHub. You need to install angular-cli-ghpages for this to work. 
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
