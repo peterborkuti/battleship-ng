@@ -12,6 +12,7 @@ export class Battle {
   numberOfShipCells: number;
   private enemy: FirePlanner;
   private enemyHitCounter = 0;
+  private myHitCounter = 0;
 
   constructor(private mymap: Map, private enemymap: Map) {}
 
@@ -25,8 +26,18 @@ export class Battle {
 
   fire() {
     const coord = this.enemy.fire();
+    if (coord.row === -1) {
+      console.log('no more shoot');
+      return;
+    }
     const hit = this.myMap.shoot(coord.row, coord.col);
     this.enemy.setMatrix(coord, hit);
+    if (hit) {
+      this.myHitCounter++;
+    }
+    if (this.myHitCounter >= this.numberOfShipCells) {
+      this.opponentWin = true;
+    }
 
     console.log('fire:', coord, hit);
   }
@@ -41,7 +52,7 @@ export class Battle {
     const shipLengths = this.getShipLengths(ships);
 
     const ap = new AutoPlacement(shipLengths, 10);
-    const enemyMap = new Map(this.enemymap.rows, this.enemymap.cols, false);
+    const enemyMap = new Map(this.enemymap.rows, this.enemymap.cols, true);
     enemyMap.placeShips(ap.placeShips());
     this.enemyMap = enemyMap;
 
